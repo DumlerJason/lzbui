@@ -1,0 +1,10 @@
+## Interface: 100007
+## Title: LzbUi
+## Notes: Simple UI Updates
+## Author: TurnipsDoom
+## Version: 1.0
+
+ChatFrames.lua
+Nameplates.lua
+Resizer.lua
+LzbUi.lua
