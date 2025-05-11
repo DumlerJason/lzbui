@@ -19,8 +19,13 @@ end
 function Resizer:RegisterEvents()
     -- Create a frame to hook into the talking head frame being shown.
     self.EventFrame:RegisterEvent("TALKINGHEAD_REQUESTED")
-    self.EventFrame:RegisterEvent("ON_SHOW")
     self.EventFrame:RegisterEvent("UNIT_POWER_UPDATE")
+    
+    -- self.EventFrame:RegisterEvent("ON_SHOW")
+    TalkingHeadFrame:SetScript("OnShow", function()
+        Resizer:ResizeTalkingHead()
+    end)
+    
     self.EventFrame:SetScript("OnEvent", function(self, event, ...)
         if event == "UNIT_POWER_UPDATE" then
             self:ResizeUIWidgetPowerBar()
