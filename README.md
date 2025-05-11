@@ -9,3 +9,6 @@ TODO (possible):
  * Add menu options to the GUI.
 
 2025-05-11 - started playing again so updated the UI version in the TOC.
+
+Need help viewing Lua Errors?  This will open the Lua Errors Window
+/run UIParentLoadAddOn("Blizzard_DebugTools"); ScriptErrorsFrame:SetParent(UIParent); ScriptErrorsFrame:SetPoint("CENTER"); ScriptErrorsFrame:Show()

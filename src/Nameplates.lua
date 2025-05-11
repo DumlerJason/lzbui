@@ -38,45 +38,55 @@ end
 function Nameplates:SetPlayerNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        nameplate:SetWidth(self.FullWidth)
+        if not InCombatLockdown() then
+            nameplate:SetWidth(self.FullWidth)
+            unitFrame:SetScale(self.FullScale)
+        end
         unitFrame:SetAlpha(self.FullAlpha)
-        unitFrame:SetScale(self.FullScale)
     end
 end
 
 function Nameplates:SetTargetNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        nameplate:SetWidth(self.FullWidth)
+        if not InCombatLockdown() then
+            nameplate:SetWidth(self.FullWidth)
+            unitFrame:SetScale(self.FullScale)
+        end
         unitFrame:SetAlpha(self.FullAlpha)
-        unitFrame:SetScale(self.FullScale)
     end
 end
 
 function Nameplates:SetAddsNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        nameplate:SetWidth(self.FullWidth)
+        if not InCombatLockdown() then
+            nameplate:SetWidth(self.FullWidth)
+            unitFrame:SetScale(self.HalfScale)
+        end
         unitFrame:SetAlpha(self.FullAlpha)
-        unitFrame:SetScale(self.HalfScale)
     end
 end
 
 function Nameplates:SetCombatNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        nameplate:SetWidth(self.FullWidth)
+        if not InCombatLockdown() then
+            nameplate:SetWidth(self.FullWidth)
+            unitFrame:SetScale(self.HalfScale)
+        end
         unitFrame:SetAlpha(self.HalfAlpha)
-        unitFrame:SetScale(self.HalfScale)
     end
 end
 
 function Nameplates:SetHideNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        nameplate:SetWidth(self.FullWidth)
+        if not InCombatLockdown() then
+            nameplate:SetWidth(self.FullWidth)
+            unitFrame:SetScale(self.FullScale)
+        end
         unitFrame:SetAlpha(self.QuarterAlpha)
-        unitFrame:SetScale(self.FullScale)
     end
 end
 
