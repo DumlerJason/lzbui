@@ -21,19 +21,18 @@ function Resizer:RegisterEvents()
     self.EventFrame:RegisterEvent("TALKINGHEAD_REQUESTED")
     self.EventFrame:RegisterEvent("UNIT_POWER_UPDATE")
     
+    -- redundant
     -- self.EventFrame:RegisterEvent("ON_SHOW")
-    TalkingHeadFrame:SetScript("OnShow", function()
-        Resizer:ResizeTalkingHead()
-    end)
     
-    self.EventFrame:SetScript("OnEvent", function(self, event, ...)
-        if event == "UNIT_POWER_UPDATE" then
+    self.EventFrame:SetScript("OnEvent", function(self, event, unit, ...)
+        if event == "UNIT_POWER_UPDATE" and unit == "player" then
             self:ResizeUIWidgetPowerBar()
         elseif event == "TALKINGHEAD_REQUESTED" then
             self:ResizeTalkingHead()
-        else
-            self:ResizeTalkingHead()
-            self:ResizeUIWidgetPowerBar()
+        -- redundant
+        --else
+        --    self:ResizeTalkingHead()
+        --    self:ResizeUIWidgetPowerBar()
         end
     end)
 end
