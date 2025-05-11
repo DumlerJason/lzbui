@@ -20,7 +20,7 @@ function Resizer:RegisterEvents()
     self.EventFrame:RegisterEvent("UNIT_POWER_UPDATE")
     self.EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
     
-    self.EventFrame:SetScript("OnEvent", function(self, event, unit, ...)
+    self.EventFrame:SetScript("OnEvent", function(_, event, unit, ...)
         if event == "UNIT_POWER_UPDATE" and unit == "player" then
             self:ResizeUIWidgetPowerBar()
         elseif event == "TALKINGHEAD_REQUESTED" then
