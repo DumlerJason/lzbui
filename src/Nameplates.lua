@@ -11,16 +11,19 @@ Nameplates.HalfAlpha = 0.5
 Nameplates.QuarterAlpha = 0.25
 Nameplates.TransparentAlpha = 0.0
 
+-- These may be removed as they cannot be modified during combat.
 Nameplates.LargeScale = 1.5
 Nameplates.FullScale = 1.0
 Nameplates.HalfScale = 0.5
 Nameplates.QuarterScale = 0.25
 
+-- These may be removed as they cannot be modified during combat.
 Nameplates.LargeWidth = 150
 Nameplates.FullWidth = 115
 Nameplates.HalfWidth = 57
 Nameplates.QuarterWidth = 28
 
+-- These may be removed as they cannot be modified during combat.
 Nameplates.TallHeight = 20
 Nameplates.FullHeight = 10
 Nameplates.HalfHeight = 5
