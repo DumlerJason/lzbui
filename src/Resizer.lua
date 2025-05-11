@@ -1,7 +1,5 @@
 Resizer = {}
 
---Resizer.talkingHeadFrame = CreateFrame("Frame")
---Resizer.uiWidgetPowerBar = CreateFrame("Frame")
 Resizer.EventFrame = CreateFrame("Frame")
 
 function Resizer:ResizeTalkingHead()
@@ -36,9 +34,6 @@ end
 
 function Resizer:Init()
     self:RegisterEvents()
-
-    --self:ResizeUIWidgetPowerBar()
-    --self:ResizeTalkingHead()
 end
 
 --return Resizer
