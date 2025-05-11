@@ -36,17 +36,6 @@ function Nameplates:GetUserSettings()
     -- load local user settings (for future Menu/UI options)
 end
 
--- Change nameplate settings for the player entering combat.
---function Nameplates:EnterCombatSettings()
-    -- this isn't the most reliable way to make things happen.
---end
-
--- Restore the original player nameplate settings.
---function Nameplates:LeaveCombatSettings()
-    -- this isn't the most reliable way to make things happen.
---end
-
-
 function Nameplates:SetPlayerNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     nameplate:SetWidth(self.FullWidth)
@@ -56,7 +45,6 @@ end
 
 function Nameplates:SetTargetNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
-    --local healthBar = unitFrame.healthBar
     nameplate:SetWidth(self.FullWidth)
     unitFrame:SetAlpha(self.FullAlpha)
     unitFrame:SetScale(self.FullScale)
@@ -64,7 +52,6 @@ end
 
 function Nameplates:SetAddsNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
-    --local healthBar = unitFrame.healthBar
     nameplate:SetWidth(self.FullWidth)
     unitFrame:SetAlpha(self.FullAlpha)
     unitFrame:SetScale(self.HalfScale)
@@ -72,7 +59,6 @@ end
 
 function Nameplates:SetCombatNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
-    --local healthBar = unitFrame.healthBar
     nameplate:SetWidth(self.FullWidth)
     unitFrame:SetAlpha(self.HalfAlpha)
     unitFrame:SetScale(self.HalfScale)
