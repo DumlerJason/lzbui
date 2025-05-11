@@ -33,50 +33,18 @@ Nameplates.BypassRateLimit = true
 
 -- Record the initial user settings for nameplates.
 function Nameplates:GetUserSettings()
+    -- load local user settings (for future Menu/UI options)
 end
 
 -- Change nameplate settings for the player entering combat.
-function Nameplates:EnterCombatSettings()
+--function Nameplates:EnterCombatSettings()
     -- this isn't the most reliable way to make things happen.
-end
+--end
 
 -- Restore the original player nameplate settings.
-function Nameplates:LeaveCombatSettings()
+--function Nameplates:LeaveCombatSettings()
     -- this isn't the most reliable way to make things happen.
-end
-
-function Nameplates:RegisterEvents()
-    self.plateEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-    self.plateEventFrame:RegisterEvent("PLAYER_ENTER_COMBAT")
-    self.plateEventFrame:RegisterEvent("PLAYER_LEAVE_COMBAT")
-    self.plateEventFrame:RegisterEvent("NAME_PLATE_CREATED")
-    self.plateEventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-    self.plateEventFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-
-    self.plateEventFrame:SetScript("OnEvent", function(self, event, ...)
-        -- this isn't the most reliable way to make things happen unfortunately.
-        -- if event == "PLAYER_ENTER_COMBAT" then
-        --     self:EnterCombatSettings()
-        -- elseif event == "PLAYER_LEAVE_COMBAT" then
-        --     self:LeaveCombatSettings()
-        -- end
-        
-        -- always update the nameplates
-        self:UpdateNameplates()
-    end)
-
-    if not self.LastUpdateTime then
-        self.LastUpdateTime = 0
-    end
-
-    self.plateEventFrame:SetScript("OnUpdate", function(self, elapsed)
-        Nameplates.LastUpdateTime = Nameplates.LastUpdateTime + elapsed
-        if Nameplates.BypassRateLimit or Nameplates.LastUpdateTime >= Nameplates.UpdateRate then
-            Nameplates:UpdateNameplates()
-            Nameplates.LastUpdateTime = 0
-        end
-    end)
-end
+--end
 
 
 function Nameplates:SetPlayerNameplate(nameplate)
@@ -153,6 +121,32 @@ function Nameplates:UpdateNameplates()
             self:SetHideNameplate(nameplate)
         end
     end
+end
+
+function Nameplates:RegisterEvents()
+    self.plateEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+    self.plateEventFrame:RegisterEvent("PLAYER_ENTER_COMBAT")
+    self.plateEventFrame:RegisterEvent("PLAYER_LEAVE_COMBAT")
+    self.plateEventFrame:RegisterEvent("NAME_PLATE_CREATED")
+    self.plateEventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+    self.plateEventFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+
+    -- When any of the above events occur, update the nameplates.
+    self.plateEventFrame:SetScript("OnEvent", function(_, event, unit, ...)
+        self:UpdateNameplates()
+    end)
+
+    if not self.LastUpdateTime then
+        self.LastUpdateTime = 0
+    end
+
+    self.plateEventFrame:SetScript("OnUpdate", function(_, elapsed)
+        self.LastUpdateTime = self.LastUpdateTime + elapsed
+        if self.BypassRateLimit or self.LastUpdateTime >= self.UpdateRate then
+            self:UpdateNameplates()
+            self.LastUpdateTime = 0
+        end
+    end)
 end
 
 function Nameplates:Init()
