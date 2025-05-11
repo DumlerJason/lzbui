@@ -27,9 +27,8 @@ Nameplates.HalfHeight = 5
 Nameplates.QuarterHeight = 2
 
 Nameplates.AutoUpdateNameplates = true
-Nameplates.UpdateRate = 0.1
+Nameplates.UpdateRate = 0.05
 Nameplates.LastUpdateTime = 0
-Nameplates.BypassRateLimit = true
 
 -- Record the initial user settings for nameplates.
 function Nameplates:GetUserSettings()
@@ -38,37 +37,47 @@ end
 
 function Nameplates:SetPlayerNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
-    nameplate:SetWidth(self.FullWidth)
-    unitFrame:SetAlpha(self.FullAlpha)
-    unitFrame:SetScale(self.FullScale)
+    if unitFrame and unitFrame:IsShown() then
+        nameplate:SetWidth(self.FullWidth)
+        unitFrame:SetAlpha(self.FullAlpha)
+        unitFrame:SetScale(self.FullScale)
+    end
 end
 
 function Nameplates:SetTargetNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
-    nameplate:SetWidth(self.FullWidth)
-    unitFrame:SetAlpha(self.FullAlpha)
-    unitFrame:SetScale(self.FullScale)
+    if unitFrame and unitFrame:IsShown() then
+        nameplate:SetWidth(self.FullWidth)
+        unitFrame:SetAlpha(self.FullAlpha)
+        unitFrame:SetScale(self.FullScale)
+    end
 end
 
 function Nameplates:SetAddsNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
-    nameplate:SetWidth(self.FullWidth)
-    unitFrame:SetAlpha(self.FullAlpha)
-    unitFrame:SetScale(self.HalfScale)
+    if unitFrame and unitFrame:IsShown() then
+        nameplate:SetWidth(self.FullWidth)
+        unitFrame:SetAlpha(self.FullAlpha)
+        unitFrame:SetScale(self.HalfScale)
+    end
 end
 
 function Nameplates:SetCombatNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
-    nameplate:SetWidth(self.FullWidth)
-    unitFrame:SetAlpha(self.HalfAlpha)
-    unitFrame:SetScale(self.HalfScale)
+    if unitFrame and unitFrame:IsShown() then
+        nameplate:SetWidth(self.FullWidth)
+        unitFrame:SetAlpha(self.HalfAlpha)
+        unitFrame:SetScale(self.HalfScale)
+    end
 end
 
 function Nameplates:SetHideNameplate(nameplate)
-    local unitFrame = nameplate.unitFrame
-    nameplate:SetWidth(self.FullWidth)
-    unitFrame:SetAlpha(self.QuarterAlpha)
-    unitFrame:SetScale(self.FullScale)
+    local unitFrame = nameplate.UnitFrame
+    if unitFrame and unitFrame:IsShown() then
+        nameplate:SetWidth(self.FullWidth)
+        unitFrame:SetAlpha(self.QuarterAlpha)
+        unitFrame:SetScale(self.FullScale)
+    end
 end
 
 -- Function to update nameplates, showing only the hostile target's nameplate
@@ -87,6 +96,8 @@ function Nameplates:UpdateNameplates()
         local unit = nameplate.UnitFrame.unit
         local unitGUID = UnitGUID(unit)
 
+        playerThreatSituation = UnitThreatSituation("player", unit)
+
         if unitGUID == playerGUID then
             -- the player
             self:SetPlayerNameplate(nameplate)
@@ -96,10 +107,10 @@ function Nameplates:UpdateNameplates()
         elseif unitGUID == targetGUID or UnitIsUnit("target", unit) then
             -- player target
             self:SetTargetNameplate(nameplate)
-        elseif UnitThreatSituation("player", unit) then
+        elseif playerThreatSituation and playerThreatSituation > 0 then
             -- unit is aggro'd to player
             self:SetAddsNameplate(nameplate)
-        elseif UnitAffectingCombat(unit) then
+        elseif UnitAffectingCombat(unit) and UnitCanAttach("player", unit) then
             -- unit has player in combat
             self:SetCombatNameplate(nameplate)
         else
@@ -116,6 +127,9 @@ function Nameplates:RegisterEvents()
     self.plateEventFrame:RegisterEvent("NAME_PLATE_CREATED")
     self.plateEventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
     self.plateEventFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+    self.plateEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    self.plateEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+    self.plateEventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
     -- When any of the above events occur, update the nameplates.
     self.plateEventFrame:SetScript("OnEvent", function(_, event, unit, ...)
@@ -128,7 +142,7 @@ function Nameplates:RegisterEvents()
 
     self.plateEventFrame:SetScript("OnUpdate", function(_, elapsed)
         self.LastUpdateTime = self.LastUpdateTime + elapsed
-        if self.BypassRateLimit or self.LastUpdateTime >= self.UpdateRate then
+        if self.LastUpdateTime >= self.UpdateRate then
             self:UpdateNameplates()
             self.LastUpdateTime = 0
         end
