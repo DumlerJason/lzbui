@@ -12,22 +12,22 @@ Nameplates.QuarterAlpha = 0.25
 Nameplates.TransparentAlpha = 0.0
 
 -- These may be removed as they cannot be modified during combat.
-Nameplates.LargeScale = 1.5
-Nameplates.FullScale = 1.0
-Nameplates.HalfScale = 0.5
-Nameplates.QuarterScale = 0.25
+-- Nameplates.LargeScale = 1.5
+-- Nameplates.FullScale = 1.0
+-- Nameplates.HalfScale = 0.5
+-- Nameplates.QuarterScale = 0.25
 
 -- These may be removed as they cannot be modified during combat.
-Nameplates.LargeWidth = 150
-Nameplates.FullWidth = 115
-Nameplates.HalfWidth = 57
-Nameplates.QuarterWidth = 28
+-- Nameplates.LargeWidth = 150
+-- Nameplates.FullWidth = 115
+-- Nameplates.HalfWidth = 57
+-- Nameplates.QuarterWidth = 28
 
 -- These may be removed as they cannot be modified during combat.
-Nameplates.TallHeight = 20
-Nameplates.FullHeight = 10
-Nameplates.HalfHeight = 5
-Nameplates.QuarterHeight = 2
+-- Nameplates.TallHeight = 20
+-- Nameplates.FullHeight = 10
+-- Nameplates.HalfHeight = 5
+-- Nameplates.QuarterHeight = 2
 
 Nameplates.AutoUpdateNameplates = true
 Nameplates.UpdateRate = 0.05
@@ -41,10 +41,10 @@ end
 function Nameplates:SetPlayerNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        if not InCombatLockdown() then
-            nameplate:SetWidth(self.FullWidth)
-            unitFrame:SetScale(self.FullScale)
-        end
+        -- if not InCombatLockdown() then
+        --     nameplate:SetWidth(self.FullWidth)
+        --     unitFrame:SetScale(self.FullScale)
+        -- end
         unitFrame:SetAlpha(self.FullAlpha)
     end
 end
@@ -52,10 +52,10 @@ end
 function Nameplates:SetTargetNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        if not InCombatLockdown() then
-            nameplate:SetWidth(self.FullWidth)
-            unitFrame:SetScale(self.FullScale)
-        end
+        -- if not InCombatLockdown() then
+        --     nameplate:SetWidth(self.FullWidth)
+        --     unitFrame:SetScale(self.FullScale)
+        -- end
         unitFrame:SetAlpha(self.FullAlpha)
     end
 end
@@ -63,10 +63,10 @@ end
 function Nameplates:SetAddsNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        if not InCombatLockdown() then
-            nameplate:SetWidth(self.FullWidth)
-            unitFrame:SetScale(self.HalfScale)
-        end
+        -- if not InCombatLockdown() then
+        --     nameplate:SetWidth(self.FullWidth)
+        --     unitFrame:SetScale(self.HalfScale)
+        -- end
         unitFrame:SetAlpha(self.FullAlpha)
     end
 end
@@ -74,10 +74,10 @@ end
 function Nameplates:SetCombatNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        if not InCombatLockdown() then
-            nameplate:SetWidth(self.FullWidth)
-            unitFrame:SetScale(self.HalfScale)
-        end
+        -- if not InCombatLockdown() then
+        --     nameplate:SetWidth(self.FullWidth)
+        --     unitFrame:SetScale(self.HalfScale)
+        -- end
         unitFrame:SetAlpha(self.HalfAlpha)
     end
 end
@@ -85,10 +85,10 @@ end
 function Nameplates:SetHideNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        if not InCombatLockdown() then
-            nameplate:SetWidth(self.FullWidth)
-            unitFrame:SetScale(self.FullScale)
-        end
+        -- if not InCombatLockdown() then
+        --     nameplate:SetWidth(self.FullWidth)
+        --     unitFrame:SetScale(self.FullScale)
+        -- end
         unitFrame:SetAlpha(self.QuarterAlpha)
     end
 end
