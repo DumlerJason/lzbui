@@ -123,7 +123,7 @@ function Nameplates:UpdateNameplates()
         elseif playerThreatSituation and playerThreatSituation > 0 then
             -- unit is aggro'd to player
             self:SetAddsNameplate(nameplate)
-        elseif UnitAffectingCombat(unit) and UnitCanAttach("player", unit) then
+        elseif UnitAffectingCombat(unit) and UnitCanAttack("player", unit) then
             -- unit has player in combat
             self:SetCombatNameplate(nameplate)
         else
