@@ -15,11 +15,6 @@ Nameplates.AutoUpdateNameplates = true
 Nameplates.UpdateRate = 0.05
 Nameplates.LastUpdateTime = 0
 
--- Record the initial user settings for nameplates.
-function Nameplates:GetUserSettings()
-    -- load local user settings (for future Menu/UI options)
-end
-
 function Nameplates:SetPlayerNameplate(nameplate)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then

@@ -5,10 +5,15 @@ World of Warcraft AddOn to do the following:
  * Minimize the 'Power Bar' frame to make it easier to fly.
 
 TODO (possible):
- * Make the mini-map less mini and remove the mini-map border decorations
+ * Do something with the mini-map alpha?
  * Add menu options to the GUI.
+ * Add button somewhere that opens the Lua Errors Window.
 
 2025-05-11 - started playing again so updated the UI version in the TOC.
+ * Scaling and width of nameplates cannot be changed once combat starts; removed that functionality.
+ * MinimizeUI.lua from earlier version kept as a reference for possible functionality changes.
 
 Need help viewing Lua Errors?  This will open the Lua Errors Window
+WARNING; Having this as a macro can result in a bazillion script errors. Don't keep it on your button bar.
 /run UIParentLoadAddOn("Blizzard_DebugTools"); ScriptErrorsFrame:SetParent(UIParent); ScriptErrorsFrame:SetPoint("CENTER"); ScriptErrorsFrame:Show()
+
