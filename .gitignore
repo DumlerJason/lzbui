@@ -398,3 +398,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Ace3 source files.
+Ace3/
