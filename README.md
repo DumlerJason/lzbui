@@ -26,3 +26,4 @@ WARNING; Having this as a macro can result in a bazillion script errors. Don't k
    - Option to remove healthbar borders.
  * Current features:
    - Set the size of UI elements that cannot be managed using 'Edit' mode.
+

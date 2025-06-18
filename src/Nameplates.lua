@@ -50,22 +50,22 @@ function Nameplates:UpdateNameplates()
 
         if unitGUID == playerGUID then
             -- the player
-            self:SetNameplateAlpha(nameplate, self.FullAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
         elseif unitGUID == petGUID or UnitIsUnit("pet", unit) then
             -- player's pet
-            self:SetNameplateAlpha(nameplate, self.FullAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
         elseif unitGUID == targetGUID or UnitIsUnit("target", unit) then
             -- player target
-            self:SetNameplateAlpha(nameplate, self.FullAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
         elseif playerThreatSituation and playerThreatSituation > 0 then
             -- unit is aggro'd to player
-            self:SetNameplateAlpha(nameplate, self.FullAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
         elseif UnitAffectingCombat(unit) and UnitCanAttack("player", unit) then
             -- unit has player in combat
-            self:SetNameplateAlpha(nameplate, self.HalfAlpha)
+            self:SetNameplateAlpha(nameplate, 0.5)
         else
             -- unknown or non-combat unit
-            self:SetNameplateAlpha(nameplate, self.QuarterAlpha)
+            self:SetNameplateAlpha(nameplate, 0.25)
         end
     end
 end
