@@ -2,18 +2,15 @@ Resizer = {}
 
 Resizer.EventFrame = CreateFrame("Frame")
 
-Resizer.TalkingHeadScale = 0.5
-Resize.PowerBarScale = 0.5
-
 function Resizer:ResizeTalkingHead()
     if TalkingHeadFrame and TalkingHeadFrame:IsShown() then
-        TalkingHeadFrame:SetScale(self.TalkingHeadScale)  -- Set TalkingHeadFrame to 50% size
+        TalkingHeadFrame:SetScale(Constants.Scale.Half)  -- Set TalkingHeadFrame to 50% size
     end
 end
 
 function Resizer:ResizeUIWidgetPowerBar()
     if UIWidgetPowerBarContainerFrame and UIWidgetPowerBarContainerFrame:IsShown() then
-        UIWidgetPowerBarContainerFrame:SetScale(self.PowerBarScale)
+        UIWidgetPowerBarContainerFrame:SetScale(Constants.Scale.Half)
     end
 end
 
