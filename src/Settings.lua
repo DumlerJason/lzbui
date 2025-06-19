@@ -1,5 +1,8 @@
+local _, AddOn = ...
 
-Settings = {}
+AddOn.Settings = {}
+
+Settings = AddOn.Settings
 Settings.GlobalOptions = {}
 Settings.GlobalOptions.NameplateSettings = {}
 Settings.GlobalOptions.NameplateSettings.SetHealthbarAlpha = true

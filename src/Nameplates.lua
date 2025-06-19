@@ -1,12 +1,14 @@
--- This will help manage nameplates so that during combat only the 
--- necessary nameplates are visible.
+local _, AddOn = ...
+
+AddOn.Nameplates = {}
+local Nameplates = AddOn.Nameplates
+local C = AddOn.Constants
 
 Nameplates = {}
 
 -- Create a frame to hook into target changes
-Nameplates.plateEventFrame = CreateFrame("Frame")
+Nameplates.plateEventFrame = {}
 
-Nameplates.AutoUpdateNameplates = true
 Nameplates.UpdateRate = 0.05
 Nameplates.LastUpdateTime = 0
 
@@ -27,9 +29,10 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
     if unitFrame and unitFrame:IsShown() then
         local healthBar = nameplate.UnitFrame.healthBar
         if healthBar then
-            healthBarBorder = healthBar.border
+            local healthBarBorder = healthBar.border
             if healthBarBorder then    
-                healthBar.Border:Hide()
+                --healthBarBorder:Hide()
+                healthBarBorder:SetAlpha(C.Alpha.Min)
             end
             healthBar:SetAlpha(alpha)
         end
@@ -58,26 +61,26 @@ function Nameplates:UpdateNameplates()
         local unit = nameplate.UnitFrame.unit
         local unitGUID = UnitGUID(unit)
 
-        playerThreatSituation = UnitThreatSituation("player", unit)
+        local playerThreatSituation = UnitThreatSituation("player", unit)
 
         if unitGUID == playerGUID then
             -- the player
             self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
         elseif unitGUID == petGUID or UnitIsUnit("pet", unit) then
             -- player's pet
-            self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
+            self:SetNameplateAlpha(nameplate, C.Alpha.Max)
         elseif unitGUID == targetGUID or UnitIsUnit("target", unit) then
             -- player target
-            self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
+            self:SetNameplateAlpha(nameplate, C.Alpha.Max)
         elseif playerThreatSituation and playerThreatSituation > 0 then
             -- unit is aggro'd to player
-            self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
+            self:SetNameplateAlpha(nameplate, C.Alpha.Max)
         elseif UnitAffectingCombat(unit) and UnitCanAttack("player", unit) then
             -- unit has player in combat
-            self:SetNameplateAlpha(nameplate, Constants.Alpha.Tenth)
+            self:SetNameplateAlpha(nameplate, C.Alpha.Tenth)
         else
             -- unknown or non-combat unit
-            self:SetNameplateAlpha(nameplate, Constants.Alpha.Tenth)
+            self:SetNameplateAlpha(nameplate, C.Alpha.Tenth)
         end
     end
 
@@ -86,35 +89,15 @@ function Nameplates:UpdateNameplates()
 end
 
 
-function Nameplates:RegisterEvents()
-    self.plateEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-    self.plateEventFrame:RegisterEvent("PLAYER_ENTER_COMBAT")
-    self.plateEventFrame:RegisterEvent("PLAYER_LEAVE_COMBAT")
-    self.plateEventFrame:RegisterEvent("NAME_PLATE_CREATED")
-    self.plateEventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-    self.plateEventFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-    self.plateEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-    self.plateEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-    self.plateEventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-
-    self.plateEventFrame:SetScript("OnEvent", function(_, event, unit, ...)
-        self:UpdateNameplates()
-    end)
-end
-
-
 function Nameplates:Init()
     self.LastUpdateTime = 0
-    if self.AutoUpdateNameplates then
-        -- Update on a schedule using the OnUpdate event.
-        self.plateEventFrame:SetScript("OnUpdate", function(_, elapsed)
-            self.LastUpdateTime = self.LastUpdateTime + elapsed
-            self:UpdateNameplates()
-        end)
-    else
-        -- Update on a set of events that can be registered for.
-        self:RegisterEvents()
-    end
+    self.plateEventFrame = CreateFrame("Frame")
+
+    -- Update on a schedule using the OnUpdate event.
+    self.plateEventFrame:SetScript("OnUpdate", function(_, elapsed)
+        self.LastUpdateTime = self.LastUpdateTime + elapsed
+        self:UpdateNameplates()
+    end)
 end
 
 --return Nameplates
