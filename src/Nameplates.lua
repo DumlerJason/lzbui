@@ -27,7 +27,7 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
     if unitFrame and unitFrame:IsShown() then
         local healthBar = nameplate.UnitFrame.healthBar
         if healthBar then
-            healthBarBorder = healthBar.Border
+            healthBarBorder = healthBar.border
             if healthBarBorder then    
                 healthBar.Border:Hide()
             end
@@ -39,6 +39,11 @@ end
 
 -- Function to update nameplates, showing only the hostile target's nameplate
 function Nameplates:UpdateNameplates()
+    -- do not update too often!
+    if self.LastUpdateTime < self.UpdateRate then
+        return
+    end
+
     local targetUnit = "target"  -- The unit ID for the player's current target
     local targetGUID = UnitGUID(targetUnit)  -- Get the GUID of the target
 
@@ -75,7 +80,11 @@ function Nameplates:UpdateNameplates()
             self:SetNameplateAlpha(nameplate, Constants.Alpha.Tenth)
         end
     end
+
+    -- reset the update timer
+    self.LastUpdateTime = 0
 end
+
 
 function Nameplates:RegisterEvents()
     self.plateEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
@@ -88,26 +97,24 @@ function Nameplates:RegisterEvents()
     self.plateEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
     self.plateEventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
-    -- When any of the above events occur, update the nameplates.
     self.plateEventFrame:SetScript("OnEvent", function(_, event, unit, ...)
         self:UpdateNameplates()
     end)
-
-    if not self.LastUpdateTime then
-        self.LastUpdateTime = 0
-    end
-
-    self.plateEventFrame:SetScript("OnUpdate", function(_, elapsed)
-        self.LastUpdateTime = self.LastUpdateTime + elapsed
-        if self.LastUpdateTime >= self.UpdateRate then
-            self:UpdateNameplates()
-            self.LastUpdateTime = 0
-        end
-    end)
 end
 
+
 function Nameplates:Init()
-    self:RegisterEvents()
+    self.LastUpdateTime = 0
+    if self.AutoUpdateNameplates then
+        -- Update on a schedule using the OnUpdate event.
+        self.plateEventFrame:SetScript("OnUpdate", function(_, elapsed)
+            self.LastUpdateTime = self.LastUpdateTime + elapsed
+            self:UpdateNameplates()
+        end)
+    else
+        -- Update on a set of events that can be registered for.
+        self:RegisterEvents()
+    end
 end
 
 --return Nameplates
