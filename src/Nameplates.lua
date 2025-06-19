@@ -9,6 +9,7 @@ Nameplates.plateEventFrame = CreateFrame("Frame")
 Nameplates.FullAlpha = 1.0
 Nameplates.HalfAlpha = 0.5
 Nameplates.QuarterAlpha = 0.25
+Nameplates.TenthAlpha
 Nameplates.TransparentAlpha = 0.0
 
 Nameplates.AutoUpdateNameplates = true
@@ -23,10 +24,13 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
     if alpha < 0.05 or alpha > 1 then
         return
     end
-
+    
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        unitFrame:SetAlpha(alpha)
+        local healthBar = namePlate.UnitFrame.healthBar
+        healthBar:SetAlpha(alpha)
+        healthBar.Border:Hide()
+        -- unitFrame:SetAlpha(alpha)
     end
 end
 
@@ -62,10 +66,10 @@ function Nameplates:UpdateNameplates()
             self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
         elseif UnitAffectingCombat(unit) and UnitCanAttack("player", unit) then
             -- unit has player in combat
-            self:SetNameplateAlpha(nameplate, 0.5)
+            self:SetNameplateAlpha(nameplate, Constants.TenthAlpha)
         else
             -- unknown or non-combat unit
-            self:SetNameplateAlpha(nameplate, 0.25)
+            self:SetNameplateAlpha(nameplate, Constants.TenthAlpha)
         end
     end
 end

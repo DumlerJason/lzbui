@@ -4,6 +4,7 @@
 ## Author: TurnipsDoom
 ## Version: 1.0
 
+Settings.lua
 Constants.lua
 ChatFrames.lua
 Nameplates.lua

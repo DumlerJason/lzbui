@@ -1,5 +1,9 @@
 
 Settings = {}
+Settings.GlobalOptions = {}
+Settings.GlobalOptions.NameplateSettings = {}
+Settings.GlobalOptions.NameplateSettings.SetHealthbarAlpha = true
+Settings.GlobalOptions.NameplateSettings.SetNameAlpha = false
 
 -- "Talking Head Options"
 -- "Adjust the size of the talking head."
