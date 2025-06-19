@@ -15,7 +15,9 @@ end
 
 -- This only works on my profile in WoW.
 function ChatFrames:PrintDebug(msg)
-    self.DebugChatFrame:AddMessage(msg)
+    if self.DebugChatFrame then
+        self.DebugChatFrame:AddMessage(msg)
+    end
 end
 
 --return ChatFrames

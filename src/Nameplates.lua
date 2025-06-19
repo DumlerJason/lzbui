@@ -6,12 +6,6 @@ Nameplates = {}
 -- Create a frame to hook into target changes
 Nameplates.plateEventFrame = CreateFrame("Frame")
 
-Nameplates.FullAlpha = 1.0
-Nameplates.HalfAlpha = 0.5
-Nameplates.QuarterAlpha = 0.25
-Nameplates.TenthAlpha
-Nameplates.TransparentAlpha = 0.0
-
 Nameplates.AutoUpdateNameplates = true
 Nameplates.UpdateRate = 0.05
 Nameplates.LastUpdateTime = 0
@@ -21,6 +15,10 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
         return
     end
     
+    if not alpha then
+        return
+    end
+
     if alpha < 0.05 or alpha > 1 then
         return
     end
@@ -28,8 +26,13 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
         local healthBar = namePlate.UnitFrame.healthBar
-        healthBar:SetAlpha(alpha)
-        healthBar.Border:Hide()
+        if healthBar then
+            healthBarBorder = healthBar.Border
+            if healthBarBorder then    
+                healthBar.Border:Hide()
+            end
+            healthBar:SetAlpha(alpha)
+        end
         -- unitFrame:SetAlpha(alpha)
     end
 end
@@ -54,22 +57,22 @@ function Nameplates:UpdateNameplates()
 
         if unitGUID == playerGUID then
             -- the player
-            self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
         elseif unitGUID == petGUID or UnitIsUnit("pet", unit) then
             -- player's pet
-            self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
         elseif unitGUID == targetGUID or UnitIsUnit("target", unit) then
             -- player target
-            self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
         elseif playerThreatSituation and playerThreatSituation > 0 then
             -- unit is aggro'd to player
-            self:SetNameplateAlpha(nameplate, Constants.MaxAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
         elseif UnitAffectingCombat(unit) and UnitCanAttack("player", unit) then
             -- unit has player in combat
-            self:SetNameplateAlpha(nameplate, Constants.TenthAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.Alpha.Tenth)
         else
             -- unknown or non-combat unit
-            self:SetNameplateAlpha(nameplate, Constants.TenthAlpha)
+            self:SetNameplateAlpha(nameplate, Constants.Alpha.Tenth)
         end
     end
 end
