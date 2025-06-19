@@ -25,7 +25,7 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
     
     local unitFrame = nameplate.UnitFrame
     if unitFrame and unitFrame:IsShown() then
-        local healthBar = namePlate.UnitFrame.healthBar
+        local healthBar = nameplate.UnitFrame.healthBar
         if healthBar then
             healthBarBorder = healthBar.Border
             if healthBarBorder then    
