@@ -38,6 +38,10 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
             healthBar.border:SetAlpha(0)
         end
 
+        if healthBar.background then
+            healthBar.background:SetAlpha(0)
+        end
+
         if healthBar then
             healthBar:SetAlpha(alpha)
         end
