@@ -24,17 +24,22 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
     end
     
     local unitFrame = nameplate.UnitFrame
+
     if unitFrame and unitFrame:IsShown() then
-        local healthBar = nameplate.UnitFrame.healthBar
-        if healthBar then
-            local healthBarBorder = healthBar.border
-            if healthBarBorder then    
-                --healthBarBorder:Hide()
-                healthBarBorder:SetAlpha(C.Alpha.Min)
-            end
-            healthBar:SetAlpha(alpha)
+        if unitFrame.healthBar.border then
+            unitFrame.healthBar.border:SetAlpha(0)
         end
-        -- unitFrame:SetAlpha(alpha)
+
+        if unitFrame.threatGlow then
+            unitFrame.threatGlow:SetAlpha(0)
+        end
+
+        if unitFrame.selectionHighlight then
+            unitFrame.selectionHighlight:SetAlpha(0)
+        end
+        if nameplate.UnitFrame.healthBar then
+            nameplate.UnitFrame.healthBar:SetAlpha(alpha)
+        end
     end
 end
 
