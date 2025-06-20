@@ -1,5 +1,7 @@
 local _, AddOn = ...
 
+print("In Resizer.lua ", AddOn)
+
 AddOn.Resizer = {}
 local Resizer = AddOn.Resizer
 local C = AddOn.Constants
@@ -21,7 +23,7 @@ function Resizer:ResizeUIWidgetPowerBar()
 end
 
 function Resizer:ResizeElements(elapsed)
-    self.LastUpdateTime += elapsed
+    self.LastUpdateTime = self.LastUpdateTime + elapsed
     if self.LastUpdateTime < self.UpdateRate then
         return
     end

@@ -4,7 +4,7 @@
 ## Author: TurnipsDoom
 ## Version: 1.0
 
+LzbUi.lua
 Constants.lua
 Nameplates.lua
 Resizer.lua
-LzbUi.lua

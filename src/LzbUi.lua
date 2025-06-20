@@ -1,4 +1,7 @@
 local _, AddOn = ...
+_G.AddOn = AddOn
+
+print("In LzbUi.lua ", AddOn)
 
 AddOn.Nameplates:Init()
 AddOn.Resizer:Init()
