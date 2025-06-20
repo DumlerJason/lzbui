@@ -29,17 +29,13 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
         local nameText = unitFrame.name or unitFrame.Name or unitFrame.NameText
         local unitFrameBorder = unitFrame.Border
         local healthBar = unitFrame.healthBar
-
+        local healthBarsContainer = unitFrame.HealthBarsContainer
         if unitFrameBorder then
             unitFrameBorder:SetAlpha(0)
         end
 
-        if healthBar.border then
-            healthBar.border:SetAlpha(0)
-        end
-
-        if healthBar.background then
-            healthBar.background:SetAlpha(0)
+        if healthBarsContainer and healthBarsContainer.border then
+            healthBarsContainer.border:SetAlpha(0)
         end
 
         if healthBar then
