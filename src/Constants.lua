@@ -1,7 +1,5 @@
 local _, AddOn = ...
 
-print("In Constants.lua ", AddOn)
-
 AddOn.Constants = {
     Alpha = {
         Min = 0.0,

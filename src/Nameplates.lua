@@ -1,7 +1,5 @@
 local _, AddOn = ...
 
-print("In Nameplates.lua", AddOn)
-
 AddOn.Nameplates = {}
 local Nameplates = AddOn.Nameplates
 local C = AddOn.Constants

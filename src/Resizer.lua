@@ -1,7 +1,5 @@
 local _, AddOn = ...
 
-print("In Resizer.lua ", AddOn)
-
 AddOn.Resizer = {}
 local Resizer = AddOn.Resizer
 local C = AddOn.Constants
