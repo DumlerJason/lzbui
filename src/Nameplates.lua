@@ -26,31 +26,21 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
     local unitFrame = nameplate.UnitFrame
 
     if unitFrame and unitFrame:IsShown() then
-        unitFrame:SetAlpha(alpha)
         local nameText = unitFrame.name or unitFrame.Name or unitFrame.NameText
+        local unitFrameBorder = unitFrame.Border
+        local healthBar = unitFrame.healthBar
 
-        if nameText and nameText:IsShown() then
-            if nameText:GetParent() ~= UIParent then
-                if nameText.SetParent then
-                    nameText:SetParent(UIParent)
-                end
-                
-                if nameText.SetFrameStrata then
-                    nameText:SetFrameStrata("HIGH")
-                    nameText:SetFrameLevel(10000)
-                end
-            end
+        if unitFrameBorder then
+            unitFrameBorder:SetAlpha(0)
+        end
 
-            nameText:ClearAllPoints()
-            nameText:SetPoint("CENTER", unitFrame, "CENTER", 0, 20)
+        if healthBar.border then
+            healthBar.border:SetAlpha(0)
+        end
 
-            if unitFrame:IsShown() then
-                nameText:SetAlpha(1)
-                nameText:Show()
-            else
-                nameText:Hide()
-            end            
-        end        
+        if healthBar then
+            healthBar:SetAlpha(alpha)
+        end
     end
 end
 
