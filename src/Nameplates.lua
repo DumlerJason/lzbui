@@ -30,18 +30,22 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
         local nameText = unitFrame.name or unitFrame.Name or unitFrame.NameText
 
         if nameText and nameText:IsShown() then
-            -- Reparent it once if not already done
             if nameText:GetParent() ~= UIParent then
-                nameText:SetParent(UIParent)
-                -- Keep it on top of plates
-                nameText:SetFrameStrata("HIGH")
-                nameText:SetFrameLevel(10000)
+                if nameText.SetParent then
+                    nameText:SetParent(UIParent)
+                end
+                
+                if nameText.SetFrameStrata then
+                    nameText:SetFrameStrata("HIGH")
+                end
+
+                if nameText.SetFrameLevel then
+                    nameText:SetFrameLevel(10000)
+                end
             end
 
-            -- Force it fully visible
             nameText:SetAlpha(1)
 
-            -- Re-anchor it to match the plate position
             nameText:ClearAllPoints()
             nameText:SetPoint("CENTER", unitFrame, "CENTER", 0, 20)
         end        
