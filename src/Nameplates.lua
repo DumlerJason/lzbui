@@ -37,17 +37,19 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
                 
                 if nameText.SetFrameStrata then
                     nameText:SetFrameStrata("HIGH")
-                end
-
-                if nameText.SetFrameLevel then
                     nameText:SetFrameLevel(10000)
                 end
             end
 
-            nameText:SetAlpha(1)
-
             nameText:ClearAllPoints()
             nameText:SetPoint("CENTER", unitFrame, "CENTER", 0, 20)
+
+            if unitFrame:IsShown() then
+                nameText:SetAlpha(1)
+                nameText:Show()
+            else
+                nameText:Hide()
+            end            
         end        
     end
 end
