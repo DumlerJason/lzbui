@@ -26,20 +26,25 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
     local unitFrame = nameplate.UnitFrame
 
     if unitFrame and unitFrame:IsShown() then
-        if unitFrame.healthBar.border then
-            unitFrame.healthBar.border:SetAlpha(0)
-        end
+        unitFrame:SetAlpha(alpha)
+        local nameText = unitFrame.name or unitFrame.Name or unitFrame.NameText
 
-        if unitFrame.threatGlow then
-            unitFrame.threatGlow:SetAlpha(0)
-        end
+        if nameText and nameText:IsShown() then
+            -- Reparent it once if not already done
+            if nameText:GetParent() ~= UIParent then
+                nameText:SetParent(UIParent)
+                -- Keep it on top of plates
+                nameText:SetFrameStrata("HIGH")
+                nameText:SetFrameLevel(10000)
+            end
 
-        if unitFrame.selectionHighlight then
-            unitFrame.selectionHighlight:SetAlpha(0)
-        end
-        if nameplate.UnitFrame.healthBar then
-            nameplate.UnitFrame.healthBar:SetAlpha(alpha)
-        end
+            -- Force it fully visible
+            nameText:SetAlpha(1)
+
+            -- Re-anchor it to match the plate position
+            nameText:ClearAllPoints()
+            nameText:SetPoint("CENTER", unitFrame, "CENTER", 0, 20)
+        end        
     end
 end
 
