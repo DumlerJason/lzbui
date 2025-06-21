@@ -1,10 +1,10 @@
-## Interface: 110105
+## Interface: 110107
 ## Title: LzbUi
 ## Notes: Simple UI Updates
 ## Author: TurnipsDoom
 ## Version: 1.0
 
-ChatFrames.lua
+Constants.lua
 Nameplates.lua
 Resizer.lua
 LzbUi.lua

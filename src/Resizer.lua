@@ -1,42 +1,42 @@
-Resizer = {}
+local _, AddOn = ...
 
-Resizer.EventFrame = CreateFrame("Frame")
+AddOn.Resizer = {}
+local Resizer = AddOn.Resizer
+local C = AddOn.Constants
 
-Resizer.TalkingHeadScale = 0.5
-Resize.PowerBarScale = 0.5
+Resizer.EventFrame = {}
+Resizer.UpdateRate = 0.05
+Resizer.LastUpdateTime = 0
 
 function Resizer:ResizeTalkingHead()
     if TalkingHeadFrame and TalkingHeadFrame:IsShown() then
-        TalkingHeadFrame:SetScale(self.TalkingHeadScale)  -- Set TalkingHeadFrame to 50% size
+        TalkingHeadFrame:SetScale(C.Scale.Half)  -- Set TalkingHeadFrame to 50% size
     end
 end
 
 function Resizer:ResizeUIWidgetPowerBar()
     if UIWidgetPowerBarContainerFrame and UIWidgetPowerBarContainerFrame:IsShown() then
-        UIWidgetPowerBarContainerFrame:SetScale(self.PowerBarScale)
+        UIWidgetPowerBarContainerFrame:SetScale(C.Scale.Half)
     end
 end
 
-function Resizer:RegisterEvents()
-    -- Create a frame to hook into the talking head frame being shown.
-    self.EventFrame:RegisterEvent("TALKINGHEAD_REQUESTED")
-    self.EventFrame:RegisterEvent("UNIT_POWER_UPDATE")
-    self.EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    
-    self.EventFrame:SetScript("OnEvent", function(_, event, unit, ...)
-        if event == "UNIT_POWER_UPDATE" and unit == "player" then
-            self:ResizeUIWidgetPowerBar()
-        elseif event == "TALKINGHEAD_REQUESTED" then
-            self:ResizeTalkingHead()
-        elseif event == "PLAYER_ENTERING_WORLD" then
-            self:ResizeUIWidgetPowerBar()
-            self:ResizeTalkingHead()
-        end
-    end)
+function Resizer:ResizeElements(elapsed)
+    self.LastUpdateTime = self.LastUpdateTime + elapsed
+    if self.LastUpdateTime < self.UpdateRate then
+        return
+    end
+
+    self:ResizeTalkingHead()
+    self:ResizeUIWidgetPowerBar()
+    self.LastUpdateTime = 0
 end
 
 function Resizer:Init()
-    self:RegisterEvents()
+    self.EventFrame = CreateFrame("Frame")
+    self.EventFrame:SetScript("OnUpdate", function(_, elapsed)
+        self:ResizeElements(elapsed)
+    end)
+
 end
 
 --return Resizer
