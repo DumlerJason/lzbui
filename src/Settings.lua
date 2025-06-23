@@ -3,10 +3,26 @@ local _, AddOn = ...
 AddOn.Settings = {}
 
 Settings = AddOn.Settings
-Settings.GlobalOptions = {}
-Settings.GlobalOptions.NameplateSettings = {}
-Settings.GlobalOptions.NameplateSettings.SetHealthbarAlpha = true
-Settings.GlobalOptions.NameplateSettings.SetNameAlpha = false
+Settings.NameplateSettings = {}
+Settings.NameplateSettings.UpdateRate = 0.05
+Settings.NameplateSettings.SetNameAlpha = true
+Settings.NameplateSettings.SetHealthbarAlpha = true
+Settings.NameplateSettings.SetTextAlpha = false
+Settings.NameplateSettings.HideHealthbarBorders = true
+Settings.NameplateSettings.PlayerAlpha = AddOn.Constants.Alpha.Max
+Settings.NameplateSettings.PetAlpha = AddOn.Constants.Alpha.Max
+Settings.NameplateSettings.TargetAlpha = AddOn.Constants.Alpha.Max
+Settings.NameplateSettings.InCombatAlpha = AddOn.Constants.Alpha.Quarter
+Settings.NameplateSettings.IsAttackingAlpha = AddOn.Constants.Alpha.Quarter
+Settings.NameplateSettings.IsOtherAlpha = AddOn.Constants.Alpha.Min
+
+Settings.ResizerSettings = {}
+Settings.ResizerSettings.UpdateRate = 0.05
+Settings.ResizerSettings.ScaleTalkingHead = true
+Settings.ResizerSettings.TalkingHeadScale = AddOn.Constants.Scale.Half
+Settings.ResizerSettings.ScalePowerBar = true
+Settings.ResizerSettings.PowerBarScale = AddOn.Constants.Scale.Half
+
 
 -- "Talking Head Options"
 -- "Adjust the size of the talking head."

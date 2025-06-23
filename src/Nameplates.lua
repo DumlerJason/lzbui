@@ -60,31 +60,32 @@ function Nameplates:UpdateNameplates()
     local petUnit = "pet"
     local petGUID = UnitGUID(petUnit)
 
+
     local nameplates = C_NamePlate.GetNamePlates()
     for _, nameplate in pairs(nameplates) do
         local unit = nameplate.UnitFrame.unit
         local unitGUID = UnitGUID(unit)
 
+        local isTarget = (unitGUID == targetGUID or UnitIsUnit("target", unit))
+        local isPlayer = (unitGuid == playerGUID)
+        local isPet = (unitGUID == petGUID or UnitIsUnit("pet", unit))
+        local isAttacking = (playerThreatSituation and playerThreatSituation > 0)
+        local isInCombat = (UnitAffectingCombat(unit) and UnitCanAttack("player", unit))
+            
         local playerThreatSituation = UnitThreatSituation("player", unit)
 
-        if unitGUID == playerGUID then
-            -- the player
+        if isPlayer then
             self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
-        elseif unitGUID == petGUID or UnitIsUnit("pet", unit) then
-            -- player's pet
+        elseif isPet then
             self:SetNameplateAlpha(nameplate, C.Alpha.Max)
-        elseif unitGUID == targetGUID or UnitIsUnit("target", unit) then
-            -- player target
+        elseif isTarget then
             self:SetNameplateAlpha(nameplate, C.Alpha.Max)
-        elseif playerThreatSituation and playerThreatSituation > 0 then
-            -- unit is aggro'd to player
-            self:SetNameplateAlpha(nameplate, C.Alpha.Max)
-        elseif UnitAffectingCombat(unit) and UnitCanAttack("player", unit) then
-            -- unit has player in combat
+        elseif isAttacking then
+            self:SetNameplateAlpha(nameplate, C.Alpha.Tenth)
+        elseif isInCombat then
             self:SetNameplateAlpha(nameplate, C.Alpha.Tenth)
         else
-            -- unknown or non-combat unit
-            self:SetNameplateAlpha(nameplate, C.Alpha.Tenth)
+            self:SetNameplateAlpha(nameplate, C.Alpha.Min)
         end
     end
 
