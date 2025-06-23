@@ -5,6 +5,7 @@
 ## Version: 1.0
 
 Constants.lua
+Settings.lua
 Nameplates.lua
 Resizer.lua
 LzbUi.lua

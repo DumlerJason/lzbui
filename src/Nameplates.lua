@@ -2,12 +2,10 @@ local _, AddOn = ...
 
 AddOn.Nameplates = {}
 local Nameplates = AddOn.Nameplates
-local C = AddOn.Constants
+local S = AddOn.Settings.NameplateSettings
 
 -- Create a frame to hook into target changes
 Nameplates.plateEventFrame = {}
-
-Nameplates.UpdateRate = 0.05
 Nameplates.LastUpdateTime = 0
 
 function Nameplates:SetNameplateAlpha(nameplate, alpha)
@@ -30,15 +28,22 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
         local unitFrameBorder = unitFrame.Border
         local healthBar = unitFrame.healthBar
         local healthBarsContainer = unitFrame.HealthBarsContainer
-        if unitFrameBorder then
-            unitFrameBorder:SetAlpha(0)
+
+        if S.HideHealthbarBorders then
+            if unitFrameBorder then
+                unitFrameBorder:SetAlpha(0)
+            end
+
+            if healthBarsContainer and healthBarsContainer.border then
+                healthBarsContainer.border:SetAlpha(0)
+            end
         end
 
-        if healthBarsContainer and healthBarsContainer.border then
-            healthBarsContainer.border:SetAlpha(0)
+        if S.SetTextAlpha and nameText then
+            nameText:SetAlpha(alpha)
         end
 
-        if healthBar then
+        if S.SetHealthbarAlpha and healthBar then
             healthBar:SetAlpha(alpha)
         end
     end
@@ -47,7 +52,7 @@ end
 -- Function to update nameplates, showing only the hostile target's nameplate
 function Nameplates:UpdateNameplates()
     -- do not update too often!
-    if self.LastUpdateTime < self.UpdateRate then
+    if self.LastUpdateTime < S.UpdateRate then
         return
     end
 
@@ -75,17 +80,17 @@ function Nameplates:UpdateNameplates()
         local playerThreatSituation = UnitThreatSituation("player", unit)
 
         if isPlayer then
-            self:SetNameplateAlpha(nameplate, Constants.Alpha.Max)
+            self:SetNameplateAlpha(nameplate, S.PlayerAlpha)
         elseif isPet then
-            self:SetNameplateAlpha(nameplate, C.Alpha.Max)
+            self:SetNameplateAlpha(nameplate, S.PetAlpha)
         elseif isTarget then
-            self:SetNameplateAlpha(nameplate, C.Alpha.Max)
+            self:SetNameplateAlpha(nameplate, S.TargetAlpha)
         elseif isAttacking then
-            self:SetNameplateAlpha(nameplate, C.Alpha.Tenth)
+            self:SetNameplateAlpha(nameplate, S.IsAttackingAlpha)
         elseif isInCombat then
-            self:SetNameplateAlpha(nameplate, C.Alpha.Tenth)
+            self:SetNameplateAlpha(nameplate, S.InCombatAlpha)
         else
-            self:SetNameplateAlpha(nameplate, C.Alpha.Min)
+            self:SetNameplateAlpha(nameplate, S.IsOtherAlpha)
         end
     end
 

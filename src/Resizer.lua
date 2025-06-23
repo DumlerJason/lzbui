@@ -2,27 +2,30 @@ local _, AddOn = ...
 
 AddOn.Resizer = {}
 local Resizer = AddOn.Resizer
-local C = AddOn.Constants
+local S = AddOn.Settings.ResizerSettings
 
 Resizer.EventFrame = {}
-Resizer.UpdateRate = 0.05
 Resizer.LastUpdateTime = 0
 
 function Resizer:ResizeTalkingHead()
-    if TalkingHeadFrame and TalkingHeadFrame:IsShown() then
-        TalkingHeadFrame:SetScale(C.Scale.Half)  -- Set TalkingHeadFrame to 50% size
+    if S.ScaleTalkingHead then
+        if TalkingHeadFrame and TalkingHeadFrame:IsShown() then
+            TalkingHeadFrame:SetScale(S.TalkingHeadScale)
+        end
     end
 end
 
 function Resizer:ResizeUIWidgetPowerBar()
-    if UIWidgetPowerBarContainerFrame and UIWidgetPowerBarContainerFrame:IsShown() then
-        UIWidgetPowerBarContainerFrame:SetScale(C.Scale.Half)
+    if S.ScalePowerBar then
+        if UIWidgetPowerBarContainerFrame and UIWidgetPowerBarContainerFrame:IsShown() then
+            UIWidgetPowerBarContainerFrame:SetScale(S.PowerBarScale)
+        end
     end
 end
 
 function Resizer:ResizeElements(elapsed)
     self.LastUpdateTime = self.LastUpdateTime + elapsed
-    if self.LastUpdateTime < self.UpdateRate then
+    if self.LastUpdateTime < S.UpdateRate then
         return
     end
 
