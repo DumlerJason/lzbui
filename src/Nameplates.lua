@@ -35,7 +35,7 @@ function Nameplates:SetNameplateAlpha(nameplate, alpha)
             end
 
             if healthBarsContainer and healthBarsContainer.border then
-                healthBarsContainer:SetAlpha(0)
+                
                 healthBarsContainer.border:SetAlpha(0)
             end
         end
